@@ -1,7 +1,5 @@
 package codeassignment.transactions;
 
-import codeassignment.rest.Status;
-
 import java.util.List;
 
 /**

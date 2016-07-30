@@ -1,4 +1,4 @@
-package codeassignment.rest;
+package codeassignment.transactions;
 
 /**
  * Created by dela on 29.07.2016.

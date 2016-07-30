@@ -1,6 +1,6 @@
 package codeassignment.inmemory;
 
-import codeassignment.rest.Status;
+import codeassignment.transactions.Status;
 import codeassignment.transactions.Transaction;
 import codeassignment.transactions.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;

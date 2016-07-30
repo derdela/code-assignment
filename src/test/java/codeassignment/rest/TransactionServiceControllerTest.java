@@ -1,5 +1,6 @@
 package codeassignment.rest;
 
+import codeassignment.transactions.Status;
 import codeassignment.transactions.Transaction;
 import codeassignment.transactions.TransactionService;
 import helper.TransactionBuilder;

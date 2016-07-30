@@ -1,5 +1,6 @@
 package codeassignment.rest;
 
+import codeassignment.transactions.Status;
 import codeassignment.transactions.Transaction;
 import codeassignment.transactions.TransactionService;
 import org.json.JSONObject;
@@ -40,6 +41,7 @@ class TransactionServiceController {
     }
 
     @RequestMapping("transactionservice/sum/{id}")
+    @ResponseBody
     public Sum getSum(@PathVariable("id") long id) {
         return new Sum(transactionService.getSum(id));
     }
