@@ -1,5 +1,6 @@
 package rest;
 
+import helper.TransactionBuilder;
 import helper.TransactionPayloadBuilder;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -30,7 +31,7 @@ public class TransactionServiceControllerTest {
     }
 
     @Test public void
-    should_return_status_ok() {
+    should_return_status_ok_when_saving_transaction() {
         // Given
         when(transactionService.save(any())).thenReturn(new Status("ok"));
         JSONObject transaction = aTransactionPayload(1).build();
@@ -55,7 +56,25 @@ public class TransactionServiceControllerTest {
         verify(transactionService).save(new Transaction(10, transaction.getDouble("amount"), transaction.getString("type")));
     }
 
+    @Test public void
+    should_get_transaction() {
+        // Given
+        Transaction transaction = aTransaction(1).withId(10).build();
+        when(transactionService.get(10)).thenReturn(transaction);
+
+        // When
+        Transaction result = transactionServiceController.get(10);
+
+        // Then
+        assertEquals(transaction, result);
+
+    }
+
     private TransactionPayloadBuilder aTransactionPayload(int seed) {
         return TransactionPayloadBuilder.aTransaction(seed);
+    }
+
+    private TransactionBuilder aTransaction(int seed) {
+        return TransactionBuilder.aTransaction(seed);
     }
 }
