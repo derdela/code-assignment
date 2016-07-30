@@ -3,14 +3,14 @@ package codeassignment.rest;
 /**
  * Created by dela on 30.07.2016.
  */
-class Sum {
+public class Sum {
     private final double sum;
 
-    Sum(double sum) {
+    public Sum(double sum) {
         this.sum = sum;
     }
 
-    double getSum() {
+    public double getSum() {
         return sum;
     }
 }
