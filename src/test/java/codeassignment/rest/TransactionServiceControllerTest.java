@@ -28,6 +28,8 @@ public class TransactionServiceControllerTest {
     @InjectMocks
     private TransactionServiceController transactionServiceController = new TransactionServiceController();
 
+    private static final double DELTA = 1e-15;
+
     @Before
     public void initMocks() {
         MockitoAnnotations.initMocks(this);
@@ -56,7 +58,7 @@ public class TransactionServiceControllerTest {
         transactionServiceController.update(10, transaction.toString());
 
         // Then
-        verify(transactionService).save(new Transaction(10, transaction.getDouble("amount"), transaction.getString("type")));
+        verify(transactionService).save(new Transaction(10, transaction.getDouble("amount"), transaction.getString("type"), transaction.getLong("parent_id")));
 
     }
 
@@ -91,6 +93,20 @@ public class TransactionServiceControllerTest {
         // Then
         assertEquals(transactionsList, result);
 
+    }
+
+    @Test
+    public void
+    should_return_sum_of_transaction() {
+        // Given
+        Transaction transaction = aTransaction(1).withAmount(5000).build();
+        when(transactionService.getSum(transaction.getId())).thenReturn(transaction.getAmount());
+
+        // When
+        Sum result = transactionServiceController.getSum(transaction.getId());
+
+        // Then
+        assertEquals(transaction.getAmount(), result.getSum(), DELTA);
     }
 
     private TransactionPayloadBuilder aTransactionPayload(int seed) {

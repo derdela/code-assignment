@@ -21,8 +21,13 @@ import static org.mockito.Mockito.when;
  */
 public class InMemoryTransactionServiceTest {
 
+    private static final double DELTA = 1e-15;
+
     @Mock
     private TypeService typeService;
+
+    @Mock
+    private SumService sumService;
 
     @InjectMocks
     private InMemoryTransactionService transactionService;
@@ -43,6 +48,7 @@ public class InMemoryTransactionServiceTest {
 
         // Then
         verify(typeService).save(transaction);
+        verify(sumService).save(transaction);
         assertEquals(transaction, transactionService.get(1));
         assertEquals(new Status("ok"), status);
     }
@@ -63,8 +69,22 @@ public class InMemoryTransactionServiceTest {
 
         // Then
         assertEquals(transactionsList, result);
-
     }
+
+    @Test
+    public void
+    should_return_sum_for_a_transactionID() {
+        // Given
+        Transaction transaction = aTransaction(1).withAmount(5000).build();
+        when(sumService.getSum(transaction.getId())).thenReturn(transaction.getAmount());
+
+        // When
+        double result = transactionService.getSum(transaction.getId());
+
+        // Then
+        assertEquals(transaction.getAmount(), result, DELTA);
+    }
+
 
     private TransactionBuilder aTransaction(int seed) {
         return TransactionBuilder.aTransaction(seed);

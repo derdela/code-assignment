@@ -14,9 +14,9 @@ import java.util.Map;
 @Component
 class InMemoryTypeService implements TypeService {
 
-    private Map<String, List<Long>> types;
+    private final Map<String, List<Long>> types;
 
-    public InMemoryTypeService() {
+    InMemoryTypeService() {
         types = new HashMap<>();
     }
 

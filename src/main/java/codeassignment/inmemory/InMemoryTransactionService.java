@@ -14,19 +14,19 @@ import java.util.List;
  */
 @Component
 public class InMemoryTransactionService implements TransactionService {
-    private HashMap<Long, Transaction> transactions;
+    private final HashMap<Long, Transaction> transactions = new HashMap<>();
 
     @Autowired
     private TypeService typeService;
 
-    public InMemoryTransactionService() {
-        this.transactions = new HashMap<>();
-    }
+    @Autowired
+    private SumService sumService;
 
     @Override
     public Status save(Transaction transaction) {
         transactions.put(transaction.getId(), transaction);
         typeService.save(transaction);
+        sumService.save(transaction);
         return new Status("ok");
     }
 
@@ -37,5 +37,10 @@ public class InMemoryTransactionService implements TransactionService {
     @Override
     public List<Long> getIdsForType(String type) {
         return typeService.getIdsForType(type);
+    }
+
+    @Override
+    public double getSum(long id) {
+        return sumService.getSum(id);
     }
 }

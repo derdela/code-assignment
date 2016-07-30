@@ -58,7 +58,7 @@ public class ApplicationTest {
                 .asJson();
 
         // Then
-        assertEquals(15000, response4.getBody().getObject().get("sum"));
+        assertEquals(15000.0, response4.getBody().getObject().get("sum"));
 
         // Given
         HttpResponse<JsonNode> response5 = Unirest
@@ -66,7 +66,7 @@ public class ApplicationTest {
                 .asJson();
 
         // Then
-        assertEquals(15000, response5.getBody().getObject().get("sum"));
+        assertEquals(10000.0, response5.getBody().getObject().get("sum"));
     }
 
     private TransactionPayloadBuilder aTransactionPayload(int seed) {

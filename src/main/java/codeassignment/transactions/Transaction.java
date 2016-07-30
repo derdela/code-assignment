@@ -12,17 +12,18 @@ public class Transaction {
     private final OptionalLong parentId;
 
     public Transaction(long id, double amount, String type) {
-        this.id = id;
-        this.amount = amount;
-        this.type = type;
-        this.parentId = OptionalLong.empty();
+        this(id, amount, type, OptionalLong.empty());
     }
 
     public Transaction(long id, double amount, String type, long parentId) {
+        this(id, amount, type, OptionalLong.of(parentId));
+    }
+
+    private Transaction(long id, double amount, String type, OptionalLong parentId) {
         this.id = id;
         this.amount = amount;
         this.type = type;
-        this.parentId = OptionalLong.of(parentId);
+        this.parentId = parentId;
     }
 
     public long getId() {

@@ -14,5 +14,5 @@ public interface TransactionService {
 
     List<Long> getIdsForType(String type);
 
-
+    double getSum(long id);
 }

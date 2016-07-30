@@ -7,7 +7,7 @@ import org.json.JSONObject;
  */
 public class TransactionPayloadBuilder {
 
-    private int seed;
+    private final int seed;
     private String type;
     private double amount;
     private long parentId;
@@ -20,6 +20,7 @@ public class TransactionPayloadBuilder {
     private void defaultValues() {
         this.amount = seed;
         this.type = "cars";
+        this.parentId = 0;
     }
 
     public static TransactionPayloadBuilder aTransaction(int seed) {
@@ -30,6 +31,7 @@ public class TransactionPayloadBuilder {
         JSONObject json = new JSONObject();
         json.put("amount", this.amount);
         json.put("type", this.type);
+        json.put("parent_id", this.parentId);
 
         return json;
     }

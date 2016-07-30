@@ -2,14 +2,17 @@ package helper;
 
 import codeassignment.transactions.Transaction;
 
+import java.util.OptionalLong;
+
 /**
  * Created by dela on 30.07.2016.
  */
 public class TransactionBuilder {
-    private int seed;
+    private final int seed;
     private long id;
     private String type;
     private double amount;
+    private OptionalLong parentId;
 
     private TransactionBuilder(int seed) {
         this.seed = seed;
@@ -27,7 +30,7 @@ public class TransactionBuilder {
     }
 
     public Transaction build() {
-        return new Transaction(id, amount, type);
+        return parentId == null ? new Transaction(id, amount, type) : new Transaction(id, amount, type, parentId.getAsLong());
     }
 
     public TransactionBuilder withId(long id) {
@@ -37,6 +40,16 @@ public class TransactionBuilder {
 
     public TransactionBuilder withType(String type) {
         this.type = type;
+        return this;
+    }
+
+    public TransactionBuilder withAmount(double amount) {
+        this.amount = amount;
+        return this;
+    }
+
+    public TransactionBuilder withParentId(long parentId) {
+        this.parentId = OptionalLong.of(parentId);
         return this;
     }
 }
