@@ -2,8 +2,6 @@ package helper;
 
 import org.json.JSONObject;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 /**
  * Created by dela on 30.07.2016.
  */
@@ -12,6 +10,7 @@ public class TransactionPayloadBuilder {
     private int seed;
     private String type;
     private double amount;
+    private long parentId;
 
     private TransactionPayloadBuilder(int seed) {
         this.seed = seed;
@@ -33,5 +32,20 @@ public class TransactionPayloadBuilder {
         json.put("type", this.type);
 
         return json;
+    }
+
+    public TransactionPayloadBuilder withAmount(double amount) {
+        this.amount = amount;
+        return this;
+    }
+
+    public TransactionPayloadBuilder withType(String type) {
+        this.type = type;
+        return this;
+    }
+
+    public TransactionPayloadBuilder withParentId(long parentId) {
+        this.parentId = parentId;
+        return this;
     }
 }

@@ -1,5 +1,7 @@
-package rest;
+package codeassignment.rest;
 
+import codeassignment.transactions.Transaction;
+import codeassignment.transactions.TransactionService;
 import helper.TransactionBuilder;
 import helper.TransactionPayloadBuilder;
 import org.json.JSONObject;
@@ -9,10 +11,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
-import transactions.Transaction;
-import transactions.TransactionService;
 
 /**
  * Created by dela on 29.07.2016.
@@ -54,6 +57,7 @@ public class TransactionServiceControllerTest {
 
         // Then
         verify(transactionService).save(new Transaction(10, transaction.getDouble("amount"), transaction.getString("type")));
+
     }
 
     @Test public void
@@ -67,6 +71,25 @@ public class TransactionServiceControllerTest {
 
         // Then
         assertEquals(transaction, result);
+
+    }
+
+    @Test
+    public void
+    should_get_all_transactionIDs_for_type() {
+        // Given
+        Transaction cars1 = aTransaction(1).withId(1).build();
+        Transaction cars2 = aTransaction(2).withId(2).build();
+        List<Long> transactionsList = new ArrayList<>();
+        transactionsList.add(cars1.getId());
+        transactionsList.add(cars2.getId());
+        when(transactionService.getIdsForType(any())).thenReturn(transactionsList);
+
+        // When
+        List<Long> result = transactionServiceController.getIdsForType("cars");
+
+        // Then
+        assertEquals(transactionsList, result);
 
     }
 
