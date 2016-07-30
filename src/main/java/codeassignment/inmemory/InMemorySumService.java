@@ -1,6 +1,7 @@
 package codeassignment.inmemory;
 
 import codeassignment.transactions.Transaction;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.Map;
 /**
  * Created by dela on 30.07.2016.
  */
+@Component
 class InMemorySumService implements SumService {
 
     private Map<Long, Double> sums;
