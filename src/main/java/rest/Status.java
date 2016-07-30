@@ -3,7 +3,7 @@ package rest;
 /**
  * Created by dela on 29.07.2016.
  */
-class Status {
+public class Status {
     private final String status;
 
     Status(String status) {

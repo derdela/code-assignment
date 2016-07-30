@@ -1,10 +1,13 @@
 package rest;
 
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.concurrent.atomic.AtomicLong;
+import transactions.Transaction;
+import transactions.TransactionService;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -13,10 +16,13 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
  */
 @RestController
 class TransactionServiceController {
-    private final AtomicLong counter = new AtomicLong();
 
-    @RequestMapping(value = "/transactionservice/transaction/{id}", method = PUT)
-    Status update(@PathVariable(value = "id") long id) {
-        return new Status("ok");
+    @Autowired
+    private TransactionService transactionService;
+
+    @RequestMapping(value = "transactionservice/transaction/{id}", method = PUT)
+    public Status update(@PathVariable(value = "id") long id, @RequestBody String body) {
+        JSONObject json = new JSONObject(body);
+        return transactionService.save(new Transaction(id,json.getDouble("amount"), json.getString("type")));
     }
 }
